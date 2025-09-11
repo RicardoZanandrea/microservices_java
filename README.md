@@ -81,3 +81,26 @@ You can get a greeting in a different language by adding the `?lang=` query para
     ```
     こんにちは, Agni!!
     ```
+
+
+### Testing with POST Requests
+
+You can also create a greeting by sending a `POST` request with a JSON body to the `/greeting-service/greeting` endpoint.
+
+* **Send a basic POST request**
+    ```bash
+    curl http://127.0.0.1:8080/greeting-service/greeting -X POST -H "Content-Type: application/json" -d '{"name": "Agni"}'
+    ```
+    **Expected Output:**
+    ```
+    Hello, Agni!!
+    ```
+
+* **Send a POST request with a language parameter**
+    ```bash
+    curl http://127.0.0.1:8080/greeting-service/greeting?lang=pt-br -X POST -H "Content-Type: application/json" -d '{"name": "Agni"}'
+    ```
+    **Expected Output:**
+    ```
+    Fala, Agni!!
+    ```
