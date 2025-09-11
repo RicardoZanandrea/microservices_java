@@ -12,12 +12,12 @@ Before you begin, ensure you have the following installed:
 
 1.  **Clone the repository**
     ```bash
-    git clone [https://github.com/RicardoZanandrea/microservices_java.git](https://github.com/RicardoZanandrea/microservices_java.git)
+    git clone https://github.com/RicardoZanandrea/microservices_java.git
     ```
 
 2.  **Navigate to the project directory**
     ```bash
-    cd greeting-service
+    cd microservices_java
     ```
 
 3.  **Run the application**
@@ -70,7 +70,7 @@ You can get a greeting in a different language by adding the `?lang=` query para
     ```
     **Expected Output:**
     ```
-    Olá, Agni!!
+    Fala, Agni!!
     ```
 
 * **Get a custom greeting in Japanese using query parameters**
