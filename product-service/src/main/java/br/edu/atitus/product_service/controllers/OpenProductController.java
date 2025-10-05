@@ -9,15 +9,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.atitus.product_service.entities.ProductEntity;
 import br.edu.atitus.product_service.repositories.ProductRepository;
+import br.edu.atitus.product_service.clients.CurrencyClient;
+import br.edu.atitus.product_service.clients.CurrencyResponse;
 
 @RestController
 @RequestMapping("products")
 public class OpenProductController {
     private final ProductRepository repository;
+    private final CurrencyClient currencyClient;
 
-    public OpenProductController(ProductRepository repository) {
+    public OpenProductController(ProductRepository repository, CurrencyClient currencyClient) {
         super();
         this.repository = repository;
+        this.currencyClient = currencyClient;
     }
 
     @Value("${server.port}")
@@ -31,7 +35,16 @@ public class OpenProductController {
                 .orElseThrow(() -> new Exception("Product not found"));
 
             product.setEnvironment("Product-Service running on port: " + serverPort);
-            product.setConverted_price(product.getPrice());
+
+            if (product.getCurrency().equals(targetCurrency)){
+                product.setConverted_price(product.getPrice());
+            } else {
+                CurrencyResponse currency = currencyClient.getCurrency(product.getPrice(), product.getCurrency(), targetCurrency);
+                product.setConverted_price(currency.getConvertedValue());
+                product.setEnvironment(product.getEnvironment() + " - " + currency.getEnvironment());
+            }
+            
+
             return ResponseEntity.ok(product);
         }
 }
